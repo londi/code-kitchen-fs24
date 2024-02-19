@@ -8,10 +8,13 @@
 </head>
 <body>
 
-<h1>7 segment display</h1>
-
-<canvas id="display" width="160" height="260"></canvas>
-
+<div class="container">
+    <h1>7 segment display</h1>
+    <label for="number-input">Enter number to display (then press enter)</label>
+    <button id="autocount-button" onclick="doAutoCount()">Toggle auto count</button>
+    <input id="number-input" type="number" min="0" max="9"/>
+    <canvas id="display" width="160" height="260"></canvas>
+</div>
 
 </body>
 </html>
