@@ -2,4 +2,4 @@
 
 Author: Leon Lüthi
 
-[Seven-segment-display](/seven-segment-display)
+[Seven-segment-display](https://londi.github.io/code-kitchen-fs24/seven-segment-display/)
