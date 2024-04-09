@@ -1,0 +1,15 @@
+.container {
+    display: grid;
+}
+
+.container > label, input, button, canvas {
+    margin: 1rem;
+}
+
+.container > button.active {
+    background-color: #17ff64;
+}
+
+canvas {
+    border: 1px solid #17ff64;
+}
