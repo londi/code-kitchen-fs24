@@ -11,6 +11,8 @@ Sprite source: https://www.iconfinder.com/icons/9023814/rocket_fill_icon
 "use strict";
 
 
+import Asteroid from "./GameObjects.js";
+
 let canvas;
 let ctx;
 
@@ -62,6 +64,7 @@ async function gameLoop(timeStamp) {
     console.debug("FPS: ", fps_formatted);
 
     update();
+    detectCollistion();
     clearCanvas();
     draw();
 
@@ -76,8 +79,38 @@ async function update() {
     pos[0] += posFactor[0] * 150 * timeFactor;
 
     for (let i = 0; i < asteroids.length; i++) {
-        asteroids[i].update();
+        asteroids[i].update(timeFactor);
     }
+}
+
+function detectCollistion() {
+    let obj1;
+    let obj2;
+
+    for (let i = 0; i < asteroids.length; i++) {
+        asteroids[i].isColliding = false;
+    }
+
+    for (let i = 0; i < asteroids.length; i++) {
+        obj1 = asteroids[i];
+        for (let j = 0; j < asteroids.length; j++) {
+            obj2 = asteroids[j];
+            if (obj1 !== obj2) {
+                if (isIntersecting(
+                    obj1.x, obj1.y, obj1.width, obj1.height,
+                    obj2.x, obj2.y, obj2.width, obj2.height)
+                ) {
+                    obj1.isColliding = true;
+                    obj2.isColliding = true;
+                }
+            }
+        }
+    }
+}
+
+function isIntersecting(x1, y1, w1, h1, x2, y2, w2, h2) {
+        return ((x2 > x1 && x2 < (x1+h1)) && (y2 > x1 && y2 < (y1+h1))) ||
+            ((x1 > x2 && x1 < (x2+w2)) && (y1 > x2 && y1 < (y2+w2)));
 }
 
 function clearCanvas() {
@@ -92,19 +125,9 @@ async function draw() {
 }
 
 
-
 function drawSpaceship() {
 
     ctx.fillStyle = "rgb(186,15,245)";
-
-    // ctx.beginPath()
-    // ctx.moveTo(pos[0], pos[1]);
-    // ctx.lineTo(pos[0] + 10,pos[1] + 10);
-    // ctx.lineTo(pos[0] + 0, pos[1] + 20);
-    // ctx.lineTo(pos[0] + 0, pos[1] + 0);
-    // ctx.closePath();
-    // ctx.fill();
-
 
     ctx.font = '12px Arial';
     ctx.fillStyle = 'black';
