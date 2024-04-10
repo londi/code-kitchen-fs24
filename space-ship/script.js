@@ -109,8 +109,10 @@ function detectCollistion() {
 }
 
 function isIntersecting(x1, y1, w1, h1, x2, y2, w2, h2) {
-        return ((x2 > x1 && x2 < (x1+h1)) && (y2 > x1 && y2 < (y1+h1))) ||
-            ((x1 > x2 && x1 < (x2+w2)) && (y1 > x2 && y1 < (y2+w2)));
+    return !(
+        x2 > (x1 + w1) || x1 > (x2 + w2) ||
+        y2 > (y1 + h1) || y1 > (y2 + h2)
+    );
 }
 
 function clearCanvas() {
