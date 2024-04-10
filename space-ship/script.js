@@ -9,14 +9,16 @@ Sprite source: https://www.iconfinder.com/icons/9023814/rocket_fill_icon
 */
 
 "use strict";
+
+
 let canvas;
 let ctx;
 
 let spaceship = new Image();
+let asteroids = [];
 
 let pos = [1, 100];
 let posFactor = [1, 1];
-let angle = 180;
 
 let frameCount = 0;
 let fps_formatted = 0;
@@ -35,6 +37,15 @@ function init() {
     canvas = document.getElementById('display');
     ctx = canvas.getContext('2d');
     spaceship.src = "rocket.svg";
+
+    asteroids = [
+        new Asteroid(ctx, 250, 50, 0, 50),
+        new Asteroid(ctx, 250, 300, 0, -50),
+        new Asteroid(ctx, 150, 0, 50, 50),
+        new Asteroid(ctx, 250, 150, 50, 50),
+        new Asteroid(ctx, 350, 75, -50, 50),
+        new Asteroid(ctx, 300, 300, 50, -50)
+    ];
 
     window.requestAnimationFrame(gameLoop);
 }
@@ -64,11 +75,9 @@ async function update() {
 
     pos[0] += posFactor[0] * 150 * timeFactor;
 
-    if (angle >= 360) {
-        angle = 0;
+    for (let i = 0; i < asteroids.length; i++) {
+        asteroids[i].update();
     }
-    angle += 50 * timeFactor;
-    turnSpaceship();
 }
 
 function clearCanvas() {
@@ -76,8 +85,12 @@ function clearCanvas() {
 }
 
 async function draw() {
+    for (let i = 0; i < asteroids.length; i++) {
+        asteroids[i].draw();
+    }
     drawSpaceship();
 }
+
 
 
 function drawSpaceship() {
@@ -100,13 +113,38 @@ function drawSpaceship() {
     ctx.drawImage(spaceship, pos[0], pos[1], 50, 50);
 }
 
-function turnSpaceship() {
-    let radians = angle * Math.PI / 180;
-    ctx.save();
 
-    ctx.translate(pos[0], pos[1]);
-    ctx.rotate(radians);
-    ctx.drawImage(spaceship, pos[0], pos[1], 50, 50)
 
-    ctx.restore();
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
