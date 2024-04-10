@@ -5,13 +5,17 @@ Tutorial: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/B
 Sprite source: https://www.iconfinder.com/icons/9023814/rocket_fill_icon
 
 */
+let spaceship = new Image();
 
 let pos = [1, 1];
 let posFactor = [1, 1];
+let angle = 180;
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Site fully loaded");
-    const interval = setInterval(cycle, 10);
+
+    // const interval = setInterval(cycle, 20);
+    cycle();
 })
 
 async function cycle() {
@@ -27,6 +31,7 @@ async function update() {
     }
 
     pos[0] += posFactor[0] * 5;
+
 }
 
 async function draw() {
@@ -36,18 +41,40 @@ async function draw() {
 }
 
 
-function drawSpaceship(context) {
-    context.clearRect(0, 0, 300, 300);
-    context.fillStyle = "rgb(186,15,245)";
+function drawSpaceship(ctx) {
+    ctx.clearRect(0, 0, 300, 300);
+    ctx.fillStyle = "rgb(186,15,245)";
 
-    context.beginPath()
-    context.moveTo(pos[0], pos[1]);
-    context.lineTo(pos[0] + 10,pos[1] + 10);
-    context.lineTo(pos[0] + 0, pos[1] + 20);
-    context.lineTo(pos[0] + 0, pos[1] + 0);
-    context.closePath();
-    context.fill();
-    // context.drawImage(document.getElementById("spaceship"), pos[0], pos[1], 50, 50);
+    //ctx.rotate((angle * Math.PI) / 180);
+
+    // ctx.beginPath()
+    // ctx.moveTo(pos[0], pos[1]);
+    // ctx.lineTo(pos[0] + 10,pos[1] + 10);
+    // ctx.lineTo(pos[0] + 0, pos[1] + 20);
+    // ctx.lineTo(pos[0] + 0, pos[1] + 0);
+    // ctx.closePath();
+    // ctx.fill();
+
+
+    // ctx.drawImage(document.getElementById("spaceship"), pos[0], pos[1], 50, 50);
+
+
+
+    spaceship.onload = () => {
+        ctx.drawImage(spaceship, pos[0], pos[1], 50, 50)
+    }
+    spaceship.src = "rocket.svg";
+}
+
+function turnSpaceship(canvas, ctx) {
+    let radians = angle * Math.PI / 180;
+    ctx.save();
+
+    ctx.translate(pos[0], pos[1]);
+    ctx.rotate(radians);
+    ctx.drawImage(spaceship, pos[0], pos[1], 50, 50)
+
+    ctx.restore();
 }
 
 
